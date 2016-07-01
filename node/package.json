@@ -1,0 +1,22 @@
+{
+  "name": "rssReader",
+  "version": "2.0.0",
+  "license": "",
+  "repository": "https://github.com/stevenluong/rssReader2",
+  "dependencies": {
+    "http-server": "*",
+    "bower": "*",
+    "connect": "*",
+    "express": "*",
+    "feedparser": "*",
+    "request": "*",
+    "socket.io": "*",
+    "socket.io-client": "*",
+    "forever": "*",
+	"querystring": "*"
+  },
+  "scripts": {
+    "postinstall": "bower install",
+    "start": "forever start server.js"
+  }
+}

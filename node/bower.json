@@ -1,0 +1,16 @@
+{
+  "name": "RSS",
+  "description": "RSS",
+  "version": "0.0.0",
+  "license": "",
+  "private": true,
+  "dependencies": {
+    "angular": "*",
+    "angular-mocks": "*",
+    "jquery": "*",
+    "bootstrap": "*",
+    "angular-route": "*",
+    "angular-resource": "*",
+    "angular-animate": "*"
+  }
+}

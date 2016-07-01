@@ -1,0 +1,52 @@
+<html ng-app="mainApp">
+	<head>
+		<link rel="icon" href="favicon.ico">
+		<title>Slapps Demeter</title>
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+		<link href="css/rss.css" rel="stylesheet">
+		<!--
+		<link rel="stylesheet" href="css/app.css">
+		<link rel="stylesheet" href="css/animations.css">
+		-->
+		<script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
+		<script src="bower_components/jquery/dist/jquery.js"></script>
+		<script src="bower_components/angular/angular.js"></script>
+		<script src="bower_components/angular-animate/angular-animate.js"></script>
+		<script src="bower_components/angular-route/angular-route.js"></script>
+		<script src="bower_components/angular-resource/angular-resource.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/controllers.js"></script>
+		<script src="js/services.js"></script>
+		<script src="js/filters.js"></script>
+		<script> 
+		//document.cookie = "name=test";
+		//var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)name\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+		//console.log(document.cookie);
+		//console.log(cookieValue);
+	
+		</script>
+	</head>
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="http://steven-luong.com">Steven Luong</a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Slapps Demeter</a></li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+		</nav>
+		<div class="view-container">
+			<div ng-view></div>
+		</div>
+	</body>
+</html>
