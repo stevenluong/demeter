@@ -1,0 +1,12 @@
+http/bower_components/
+http/node_modules/
+ror/log/
+node/bower_components/
+node/node_modules/
+ror/public/assets/
+ror/vendor/bundle/
+ror/vendor/cache/
+*.swp
+*.swo
+
+
