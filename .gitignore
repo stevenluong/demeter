@@ -6,6 +6,7 @@ node/node_modules/
 ror/public/assets/
 ror/vendor/bundle/
 ror/vendor/cache/
+*.pdf
 *.swp
 *.swo
 
