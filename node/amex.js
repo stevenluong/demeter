@@ -68,5 +68,5 @@ var extractExpenses = function(p){
 	return expenses;
 
 }
-pdfParser.loadPDF("./AMEX Jun 2016.pdf");
+pdfParser.loadPDF("./AMEX Jul 2016.pdf");
 
