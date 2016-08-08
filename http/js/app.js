@@ -17,6 +17,9 @@ mainApp.config(['$routeProvider',
         templateUrl: 'partials/main.html',
         controller: 'mainCtrl'
       }).
+    when('/upload', {
+        templateUrl: 'partials/upload.html'
+      }).
       otherwise({
         redirectTo: '/'
       });

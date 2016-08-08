@@ -6,6 +6,8 @@ node/node_modules/
 ror/public/assets/
 ror/vendor/bundle/
 ror/vendor/cache/
+bower_components
+node_modules
 *.pdf
 *.swp
 *.swo

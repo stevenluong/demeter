@@ -1,5 +1,5 @@
 let fs = require('fs'),
-	PDFParser = require("./node_modules/pdf2json/PDFParser");
+	PDFParser = require("../node_modules/pdf2json/PDFParser");
 
 let pdfParser = new PDFParser();
 
