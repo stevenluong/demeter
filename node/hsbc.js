@@ -1,5 +1,5 @@
 let fs = require('fs'),
-	PDFParser = require("./node_modules/pdf2json/PDFParser");
+	PDFParser = require("../node_modules/pdf2json/PDFParser");
 
 let pdfParser = new PDFParser();
 
@@ -42,21 +42,23 @@ var extractExpenses = function(p){
 	p.Texts.forEach(function(t){
 		//console.log(t);
 		//console.log(t.y+"-"+t.R[0].T);
-		var newLineNumber = t.y;
+		var newLineNumber = t.y.toFixed(1);
 		if(typeof content[newLineNumber]=="undefined")
 			content[newLineNumber] = "";
 		if(t.x>25 && t.x<30)
 			content[newLineNumber] = content[newLineNumber] +"O"+t.R[0].T.replace("%2C",",")+" ";
-		else if(t.x>30 && t.x<50)
+		else if(t.x>30 && t.x<50){
 			content[newLineNumber] = content[newLineNumber] +"I"+t.R[0].T.replace("%2C",",")+" ";
-		else
+		}else{
 			content[newLineNumber] = content[newLineNumber] +t.R[0].T.replace("%2C",",")+" ";
+			console.log(newLineNumber);
+			console.log(content[newLineNumber]);
+		}
 	});
 	// FILTER EXPENSES
 	var expenses = [];
 	for(var l in content){
 		if(!isNaN(content[l][0]) && !isNaN(content[l][1])&&isNaN(content[l][2]) &&!isNaN(content[l][3])&& !isNaN(content[l][4])){
-		//console.log(content[l]);
 			/*
 			   var tmp = content[l].split(",");
 			   var value = tmp[0].replace(" ","");
@@ -66,8 +68,6 @@ var extractExpenses = function(p){
 			   */
 			var splits = content[l].split(' ');
 			var length = splits.length;
-			//console.log(content[l]);
-			//console.log(length);
 			//PARSE
 			var e = {};
 			e["date"] = splits[0];
@@ -90,5 +90,5 @@ var extractExpenses = function(p){
 	return expenses;
 
 }
-pdfParser.loadPDF("./HSBC Jun 2016.pdf");
+pdfParser.loadPDF("./HSBC Jul 2016.pdf");
 
