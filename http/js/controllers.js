@@ -2,9 +2,9 @@
 
 /* Controllers */
 
-var mainControllers = angular.module('mainControllers', ['ngFileUpload']);
-mainControllers.controller('mainCtrl', ['$scope','Sources','Upload',
-        function($scope, Sources, Upload) {
+var mainControllers = angular.module('mainControllers', []);
+mainControllers.controller('mainCtrl', ['$scope','Sources',
+        function($scope, Sources) {
             //Sources.getSources().success(function(response){
             //    console.log(response);
             //});

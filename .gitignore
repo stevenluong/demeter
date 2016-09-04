@@ -11,5 +11,6 @@ node_modules
 *.pdf
 *.swp
 *.swo
+.DS_Store
 
 
