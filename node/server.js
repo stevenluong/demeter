@@ -43,6 +43,7 @@ pdfParser.on("pdfParser_dataError", errData => console.log(errData.parserError) 
 pdfParser.on("pdfParser_dataReady", pdfData => {
 	//fs.writeFile("./out.json", JSON.stringify(pdfData));
 	//console.log(pdfData);
+        //TODO HSBC OR AMEX ? 
 	var pages = pdfData.formImage.Pages;
 	var expenses = [];
 	for(var i in pages){
@@ -57,6 +58,7 @@ var process = function(expenses){
 	var total = 0;
 	var income = 0;
 	var outcome = 0;
+        //TODO SEND TO ROR
 	for(var i in expenses){
 		console.log(expenses[i].value);
 		if(expenses[i].type =="Income")
@@ -78,7 +80,7 @@ var extractExpenses = function(p){
 	p.Texts.forEach(function(t){
 		//console.log(t);
 		//console.log(t.y+"-"+t.R[0].T);
-		var newLineNumber = t.y;
+		var newLineNumber = t.y.toFixed(1);
 		if(typeof content[newLineNumber]=="undefined")
 			content[newLineNumber] = "";
 		if(t.x>25 && t.x<30)
