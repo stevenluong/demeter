@@ -11,27 +11,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418124429) do
-
-  create_table "news", force: :cascade do |t|
-    t.string   "title"
-    t.string   "guid"
-    t.string   "link"
-    t.datetime "date"
-    t.string   "source"
-    t.string   "image_link"
-    t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  create_table "sources", force: :cascade do |t|
-    t.string   "name"
-    t.boolean  "display"
-    t.string   "language"
-    t.string   "rss_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema.define(version: 20161003215201) do
 
 end

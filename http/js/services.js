@@ -4,10 +4,10 @@
 
 var mainServices = angular.module('mainServices', ['ngResource']);
 
-mainServices.factory('Sources',function($http){
-    var sources = {};
-    //sources.getSources = function(){
-    //    return $http.get("http://google.com")
-    //};	
-    return sources;
+mainServices.factory('Transactions',function($http){
+    var transactions= {};
+    transactions.getTransactions = function(){
+        return $http.get("http://slapps.fr/demeter/ror/transactions.json")
+    };	
+    return transactions;
 });

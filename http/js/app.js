@@ -20,6 +20,11 @@ mainApp.config(['$routeProvider',
     when('/upload', {
         templateUrl: 'partials/upload.html'
       }).
+   when('/read', {
+        templateUrl: 'partials/read.html',
+        controller: 'readCtrl'
+      }).
+
       otherwise({
         redirectTo: '/'
       });

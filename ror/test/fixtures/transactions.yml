@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  value: 9.99
+  type: 
+  description: MyString
+  made_on: 2016-10-03
+  saved_on: 2016-10-03
+
+two:
+  value: 9.99
+  type: 
+  description: MyString
+  made_on: 2016-10-03
+  saved_on: 2016-10-03

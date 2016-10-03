@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :transactions
   resources :news
   resources :sources
   # The priority is based upon order of creation: first created -> highest priority.
