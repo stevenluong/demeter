@@ -1,5 +1,5 @@
 //var serverPathHTTP = "localhost:8000/http"
-var serverPath = "slapps.fr/demeter/http/#/read"
+var serverPathHTTP = "slapps.fr/demeter/http"
 var express =   require("express");
 var multer  =   require('multer');
 var app         =   express();
@@ -51,7 +51,6 @@ pdfParser.on("pdfParser_dataReady", pdfData => {
     //console.log(pdfData);
     var pages = pdfData.formImage.Pages;
     var bank = extractBank(pages);
-    console.log(pages.length);
     console.log(bank);
     var expenses = [];
     var es = [];
@@ -102,8 +101,8 @@ var process = function(expenses){
             }
 
         };
-        COMMON.ror_post(data,"slapps.fr","/demeter/ror/transactions.json")
-            console.log(expenses[i].value);
+        COMMON.ror_post(data,"slapps.fr","/demeter/ror/transactions.json");
+            //console.log(expenses[i].value);
         if(expenses[i].type =="Income")
             income = income + parseFloat(expenses[i].value);	
         if(expenses[i].type =="Outcome")
@@ -125,6 +124,7 @@ var extractExpensesAMEX = function(pages){
     var content = {};
     for(var i in pages){
         pages[i].Texts.forEach(function(t){
+            //TODO remove?
             if(t.y==8.067)
                 console.log(t);
             var newLineNumber = t.y;
@@ -189,25 +189,28 @@ var extractExpensesHSBC = function(pages){
             else if(t.x>30 && t.x<50)
                 content[i+'-'+newLineNumber] = content[i+'-'+newLineNumber] +"I"+customParse(t.R[0].T)+"|";
             else
-                content[i+'-'+newLineNumber] = content[i+'-'+newLineNumber] +customParse(t.R[0].T)+"|";
+                content[i+'-'+newLineNumber] = content[i+'-'+newLineNumber] +customParse(t.R[0].T).replace(/\s\s+/g, '|')+"|";
         });
     }
-    console.log(content);
+    //console.log(content);
     // FILTER EXPENSES
     var expenses = [];
     for(var l in content){
-        if(isNaN(content[l][0]))
-            continue;
-        if(isNaN(content[l][1])||isNaN(content[l][2]) ||isNaN(content[l][3]) || isNaN(content[l][4]))
-            continue;
-        console.log(content[l]);
         var splits = content[l].split('|');
         var length = splits.length;
-        //console.log(length);
+        //La premiere valeur est une date
+        if(splits[0].split('.').length!=2)
+            continue;
+        console.log(splits);
+        //Il faut 4 valeurs
+        if(!splits[0]||!splits[1]||!splits[2]||!splits[3]||splits.length>6)
+            continue;
+        console.log("--------");
         //PARSE
         var e = {};
         e["date"] = splits[0];
-        e["description"] = splits[2];
+        e["description"] = splits[1];
+        //length is variable
         if(splits[length-2][0]=="I")
             e["type"] = "Income";	
         else if(splits[length-2][0]=="O")
@@ -218,54 +221,9 @@ var extractExpensesHSBC = function(pages){
             if(splits[length-2].split('.').length>2)
                 value = value.replace(".","");
         e["value"] = parseFloat(value);
-        //console.log(e["value"]);
-        //console.log(e);
         expenses.push(e);
-        //else{
-        //console.log("NP"+content[l]);
-        //}
     }
     return expenses;
 
 }
-function ror_post(date,years,rate){
-    var data = {
-        rate: {
-            date: date,
-            years: years,
-            rate: rate.replace(',','.')
-        }
-    };
-    var dataStr = JSON.stringify(data);
-    var options = {
-        host: "slapps.fr",
-        port: 80,
-        path: '/hephaistos/ror/rates.json',
-        method: 'POST',
-        headers: {
-            'Content-Length': dataStr.length,
-            'Content-Type': 'application/json'
-        }
-    };
-    var str = '';
 
-    var req = http.request(options, function(res) {
-        res.setEncoding('utf8');
-        res.on('data', function(data) {
-            str += data;
-        });
-
-        res.on('end', function() {
-            //console.log(str);
-        })
-
-        res.on('error', function(error) {
-            //console.log(error);
-        })
-    })
-    req.on('error',function(e){
-        console.log(e);
-        console.log("SLerror");
-    });
-    req.end(dataStr);
-}

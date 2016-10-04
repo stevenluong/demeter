@@ -1,7 +1,14 @@
 var http = require('http');
 module.exports = {
+    exemple: function(){
+        var data ={
+            transaction: {
+                field1: "value1",
+                field2: "value2",
+            }};
+        ror_post(data,"slapps.fr","/APP/ror/OBJECTS.json");
+    },
     ror_post: function(data,host,path){
-        console.log(data);
         var dataStr = JSON.stringify(data);
         var options = {
             host: host,
