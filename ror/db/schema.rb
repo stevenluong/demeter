@@ -11,6 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161003215201) do
+ActiveRecord::Schema.define(version: 20161108232437) do
+
+  create_table "statements", force: :cascade do |t|
+    t.datetime "date"
+    t.string   "bank"
+    t.string   "pdf"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.decimal  "value"
+    t.string   "transaction_type"
+    t.string   "description"
+    t.date     "made_on"
+    t.date     "saved_on"
+    t.integer  "statement_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
 
 end

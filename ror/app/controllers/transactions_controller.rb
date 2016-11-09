@@ -4,7 +4,13 @@ class TransactionsController < ApplicationController
   # GET /transactions
   # GET /transactions.json
   def index
+    if params.has_key?(:statement_id)
+    @statement = Statement.find(params[:statement_id])
+    logger.fatal @statement.id
+    @transactions = @statement.transactions
+    else
     @transactions = Transaction.all
+    end
   end
 
   # GET /transactions/1
@@ -69,6 +75,6 @@ class TransactionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def transaction_params
-      params.require(:transaction).permit(:value, :transaction_type, :description, :made_on, :saved_on)
+      params.require(:transaction).permit(:statement_id, :value, :transaction_type, :description, :made_on, :saved_on)
     end
 end

@@ -8,7 +8,7 @@ module.exports = {
             }};
         ror_post(data,"slapps.fr","/APP/ror/OBJECTS.json");
     },
-    ror_post: function(data,host,path){
+    ror_post: function(data,host,path,callback){
         var dataStr = JSON.stringify(data);
         var options = {
             host: host,
@@ -30,6 +30,7 @@ module.exports = {
 
             res.on('end', function() {
                 //console.log(str);
+                callback(str);
             })
 
             res.on('error', function(error) {

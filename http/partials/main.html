@@ -3,3 +3,17 @@
 <li><a href="#/upload">New PDF</a></li>
 <li><a href="#/read">Read Last Upload</a></li>
 </ul>
+    <table class="table table-striped">
+            <th>Id</th>
+            <th>Bank</th>
+            <th>date</th>
+            <th>Transactions</th>
+            <tr ng-repeat="s in statements">
+                <td>{{s.id}}</td>
+                <td>{{s.bank}}</td>
+                <td>{{s.date}}</td>
+                <td><a href="#/read/{{s.id}}">Transactions</a></td>
+            </tr>
+        </table>
+
+

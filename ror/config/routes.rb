@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :statements do
+      resources :transactions
+  end
   resources :transactions
   resources :news
   resources :sources

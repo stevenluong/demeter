@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>Statement Id</th>
       <th>Value</th>
       <th>Type</th>
       <th>Description</th>
@@ -17,6 +18,7 @@
   <tbody>
     <% @transactions.each do |transaction| %>
       <tr>
+        <td><%= transaction.statement_id%></td>
         <td><%= transaction.value %></td>
         <td><%= transaction.transaction_type %></td>
         <td><%= transaction.description %></td>

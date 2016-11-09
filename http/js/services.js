@@ -4,10 +4,15 @@
 
 var mainServices = angular.module('mainServices', ['ngResource']);
 
-mainServices.factory('Transactions',function($http){
-    var transactions= {};
-    transactions.getTransactions = function(){
-        return $http.get("http://slapps.fr/demeter/ror/transactions.json")
-    };	
-    return transactions;
+mainServices.factory('Transaction',function($resource){
+    return $resource("http://slapps.fr/demeter/ror/transactions.json/:id")
+});
+mainServices.factory('Statement',function($resource){
+        return $resource("http://slapps.fr/demeter/ror/statements/:id/:subResource.json",{},{
+            transactions:{
+                params: {subResource: 'transactions'},
+                method: 'GET',
+                isArray:true
+            }
+        });
 });

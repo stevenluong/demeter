@@ -6,6 +6,7 @@ class CreateTransactions < ActiveRecord::Migration
       t.string :description
       t.date :made_on
       t.date :saved_on
+      t.integer :statement_id
 
       t.timestamps null: false
     end

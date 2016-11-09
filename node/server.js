@@ -49,23 +49,38 @@ pdfParser.on("pdfParser_dataError", errData => console.log(errData.parserError) 
 pdfParser.on("pdfParser_dataReady", pdfData => {
     //fs.writeFile("./out.json", JSON.stringify(pdfData));
     //console.log(pdfData);
-    var pages = pdfData.formImage.Pages;
-    var bank = extractBank(pages);
-    console.log(bank);
     var expenses = [];
     var es = [];
-    if(bank == "HSBC"){
-        es = extractExpensesHSBC(pages);
-    }
-    else if(bank=="AMEX"){
-        es = extractExpensesAMEX(pages);
-    }
-    else
-        console.log("ERROR BANK");
-    es.forEach(function(e){
-        expenses.push(e);
+    var pages = pdfData.formImage.Pages;
+    var bank = extractBank(pages);
+    //console.log(bank);
+    //TODO create statement
+    var data ={
+        statement: {
+            bank: bank,
+            date: new Date(),
+            pdf: "link"
+        }
+    };
+    COMMON.ror_post(data,"slapps.fr","/demeter/ror/statements.json",function(result){
+        console.log(result);
+        var statement = JSON.parse(result);
+        console.log(statement.id);
+        if(bank == "HSBC"){
+            es = extractExpensesHSBC(pages);
+        }
+        else if(bank=="AMEX"){
+            es = extractExpensesAMEX(pages);
+        }
+        else
+            console.log("ERROR BANK");
+        es.forEach(function(e){
+            expenses.push(e);
+        });
+        process(statement.id,expenses);
+
     });
-    process(expenses);
+
 });
 var extractBank = function(pages){
     var content = "";
@@ -87,13 +102,14 @@ var extractBank = function(pages){
         else
             return "?";
 }
-var process = function(expenses){
+var process = function(statementId,expenses){
     var total = 0;
     var income = 0;
     var outcome = 0;
     for(var i in expenses){
         var data ={
             transaction: {
+                statement_id: statementId,
                 value: expenses[i].value,
                 description: expenses[i].description,
                 transaction_type: expenses[i].type
@@ -101,8 +117,8 @@ var process = function(expenses){
             }
 
         };
-        COMMON.ror_post(data,"slapps.fr","/demeter/ror/transactions.json");
-            //console.log(expenses[i].value);
+        COMMON.ror_post(data,"slapps.fr","/demeter/ror/transactions.json",function(){});
+        //console.log(expenses[i].value);
         if(expenses[i].type =="Income")
             income = income + parseFloat(expenses[i].value);	
         if(expenses[i].type =="Outcome")
@@ -133,9 +149,9 @@ var extractExpensesAMEX = function(pages){
             content[i+'-'+newLineNumber] = content[i+'-'+newLineNumber] + customParse(t.R[0].T)+"|";
         });
     }
-    console.log(content);
+    //console.log(content);
 
-    console.log('----------');
+    //console.log('----------');
     // FILTER EXPENSES
     var expenses = [];
     for(var l in content){
@@ -146,7 +162,7 @@ var extractExpensesAMEX = function(pages){
         var splits = content[l].split('|');
         var length = splits.length;
         //console.log()
-        console.log(content[l]);
+        //console.log(content[l]);
         //PROCESS
         //It's not a number
         if(splits[0].split('.').length!=2 || splits[0].split('.')[1].length!=2)
@@ -154,11 +170,11 @@ var extractExpensesAMEX = function(pages){
         //It s a total (first line on top)
         if(splits[1]=="eur")
             continue;
-        console.log("YES-----");
+        //console.log("YES-----");
         //PARSE
         var e = {};
         e["value"] = parseFloat(splits[0].replace(",","."));
-        console.log(e["value"]);
+        //console.log(e["value"]);
         e["date"] = splits[splits.length-5]+" "+splits[splits.length-4];
         e["description"] = splits[1]+" "+splits[2];
         if(splits[1]=="prelevement")
@@ -201,11 +217,11 @@ var extractExpensesHSBC = function(pages){
         //La premiere valeur est une date
         if(splits[0].split('.').length!=2)
             continue;
-        console.log(splits);
+        //console.log(splits);
         //Il faut 4 valeurs
         if(!splits[0]||!splits[1]||!splits[2]||!splits[3]||splits.length>6)
             continue;
-        console.log("--------");
+        //console.log("--------");
         //PARSE
         var e = {};
         e["date"] = splits[0];

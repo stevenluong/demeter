@@ -16,16 +16,19 @@ mainApp.config(['$routeProvider',
       when('/', {
         templateUrl: 'partials/main.html',
         controller: 'mainCtrl'
-      }).
+              }).
     when('/upload', {
         templateUrl: 'partials/upload.html'
       }).
-   when('/read', {
+   when('/read/:statementId', {
         templateUrl: 'partials/read.html',
         controller: 'readCtrl'
       }).
 
       otherwise({
-        redirectTo: '/'
+        templateUrl: 'partials/main.html',
+        controller: 'mainCtrl'
+
+        //redirectTo: '/'
       });
   }]);

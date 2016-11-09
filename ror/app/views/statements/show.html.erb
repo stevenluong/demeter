@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @statement.date %>
+</p>
+
+<p>
+  <strong>Bank:</strong>
+  <%= @statement.bank %>
+</p>
+
+<p>
+  <strong>Pdf:</strong>
+  <%= @statement.pdf %>
+</p>
+
+<%= link_to 'Edit', edit_statement_path(@statement) %> |
+<%= link_to 'Back', statements_path %>
